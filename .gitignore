@@ -1,9 +1,13 @@
+.DS_Store
+
+
 *.rbc
 capybara-*.html
 .rspec
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /db/*.sqlite3-[0-9]*
+.pgpass
 /public/system
 /coverage/
 /spec/tmp
@@ -17,17 +21,22 @@ pickle-email-*.html
 !/log/.keep
 !/tmp/.keep
 
-# TODO Comment out this rule if you are OK with secrets being uploaded to the repo
+# Ignore key files for decrypting credentials and more.
 config/initializers/secret_token.rb
-config/master.key
+/config/*.key
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
 
 # Only include if you have production secrets in this file, which is no longer a Rails default
 # config/secrets.yml
 
 # dotenv, dotenv-rails
-# TODO Comment out these rules if environment variables can be committed
 .env
 .env*.local
+/.env*
 
 ## Environment normalization:
 /.bundle
@@ -63,7 +72,10 @@ node_modules/
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore uploaded files in development
+# Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
 !/storage/.keep
 /public/uploads
+/tmp/storage/*
+!/tmp/storage/
+!/tmp/storage/.keep
