@@ -1,6 +1,9 @@
 ---
 name: ce-dhh-rails-style
-description: This skill should be used when writing Ruby and Rails code in DHH's distinctive 37signals style. It applies when writing Ruby code, Rails applications, creating models, controllers, or any Ruby file. Triggers on Ruby/Rails code generation, refactoring requests, code review, or when the user mentions DHH, 37signals, Basecamp, HEY, or Campfire style. Embodies REST purity, fat models, thin controllers, Current attributes, Hotwire patterns, and the "clarity over cleverness" philosophy.
+description: |-
+  This skill should be used when writing Ruby and Rails code in DHH's distinctive 37signals style. It applies when writing Ruby code, Rails applications, creating models, controllers, or any Ruby file. Triggers on Ruby/Rails code generation, refactoring requests, code review, or when the user mentions DHH, 37signals, Basecamp, HEY, or Campfire style. Embodies REST purity, fat models, thin controllers, Current attributes, Hotwire patterns, and the "clarity over cleverness" philosophy.
+  disable-model-invocation: false
+disable-model-invocation: false
 ---
 
 <objective>
@@ -183,4 +186,3 @@ Based on [The Unofficial 37signals/DHH Rails Style Guide](https://github.com/mar
 - Code examples from Fizzy are licensed under the O'Saasy License
 - Not affiliated with or endorsed by 37signals
 </credits>
-
