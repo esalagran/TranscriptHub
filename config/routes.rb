@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   constraints(host: "127.0.0.1") do
     get "(*path)", to: redirect { |params, req| "#{req.protocol}localhost:#{req.port}/#{params[:path]}" }
   end
-  get 'inertia-example', to: 'inertia_example#index'
+  get "inertia-example", to: "inertia_example#index"
 
   resource :session
   resources :passwords, param: :token
