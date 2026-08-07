@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "tsc -p tsconfig.app.json && tsc -p tsconfig.node.json"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +20,21 @@
   "type": "module",
   "dependencies": {
     "@inertiajs/react": "^3.6.1",
+    "@inertiajs/vite": "^3.6.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.0.5",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@inertiajs/core": "^3.6.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.0",
+    "vite-plugin-ruby": "^5.2.2"
   }
 }
