@@ -1,12 +1,12 @@
 import { useForm } from "@inertiajs/react";
 
-export default function New({ flash, email_address }) {
+export default function New({ flash, email_address }: { flash?: any; email_address?: string }) {
   const { data, setData, post, processing } = useForm({
     email_address: email_address || "",
     password: "",
   });
 
-  const submit = (e) => {
+  const submit = (e: React.SubmitEvent) => {
     e.preventDefault();
     post("/session");
   };
@@ -42,7 +42,7 @@ export default function New({ flash, email_address }) {
           required
           autoComplete="current-password"
           placeholder="Enter your password"
-          maxLength="72"
+          maxLength={72}
           value={data.password}
           onChange={(e) => setData("password", e.target.value)}
         />

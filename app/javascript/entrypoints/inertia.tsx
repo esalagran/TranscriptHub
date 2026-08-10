@@ -1,7 +1,10 @@
 import { createInertiaApp } from '@inertiajs/react'
+import AppLayout from "../../frontend/layouts/AppLayout"
 
 void createInertiaApp({
   pages: "../../frontend/pages",
+
+  layout: () => AppLayout,
 
   strictMode: true,
 
