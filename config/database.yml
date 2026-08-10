@@ -12,10 +12,8 @@ development:
 
 test:
   <<: *default
-  database: transcripthub_test
-  host: localhost
-  username: eduardsalagranferragut
-  password: <%= ENV.fetch("POSTGRES_PASSWORD", "postgres") %>
+  adapter: sqlite3
+  database: storage/test.sqlite3
 
 production:
   primary: &primary_production
