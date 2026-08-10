@@ -32,7 +32,18 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips libyaml-dev pkg-config && \
+    apt-get install --no-install-recommends -y \
+      build-essential \
+      git \
+      libvips \
+      libyaml-dev \
+      pkg-config \
+      curl \
+      ca-certificates && \
+    curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install --no-install-recommends -y nodejs && \
+    corepack enable && \
+    corepack prepare pnpm@latest --activate && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -46,6 +57,8 @@ RUN bundle install && \
 
 # Copy application code
 COPY . .
+
+RUN pnpm install --frozen-lockfile
 
 # Precompile bootsnap code for faster boot times.
 # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
