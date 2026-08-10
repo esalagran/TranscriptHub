@@ -1,7 +1,14 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "inertia_rails/testing"
 require_relative "test_helpers/session_test_helper"
+
+InertiaRails::Testing.install!
+
+class ActionDispatch::IntegrationTest
+  include InertiaRails::Testing::Helpers
+end
 
 module ActiveSupport
   class TestCase

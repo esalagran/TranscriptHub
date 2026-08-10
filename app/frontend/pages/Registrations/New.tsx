@@ -1,4 +1,6 @@
 import { useForm } from "@inertiajs/react";
+import { SubmitEvent } from "react";
+
 
 export default function New() {
   const { data, setData, post, processing, errors } = useForm({
@@ -9,7 +11,7 @@ export default function New() {
     },
   });
 
-  function submit(e) {
+  function submit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     post("/registration");
@@ -24,7 +26,7 @@ export default function New() {
           value={data.user.email_address}
           onChange={(e) => setData("user", { ...data.user, email_address: e.target.value })}
         />
-        {errors.email_address && <div>{errors.email_address}</div>}
+        {errors["user.email_address"] && <div>{errors["user.email_address"]}</div>}
       </div>
 
       <div>
@@ -34,7 +36,7 @@ export default function New() {
           value={data.user.password}
           onChange={(e) => setData("user", { ...data.user, password: e.target.value })}
         />
-        {errors.password && <div>{errors.password}</div>}
+        {errors["user.password"] && <div>{errors["user.password"]}</div>}
       </div>
 
       <div>
