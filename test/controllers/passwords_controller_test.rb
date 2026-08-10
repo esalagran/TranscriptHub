@@ -74,5 +74,4 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
         inertia.flash[:alert]
       )
   end
-
 end
