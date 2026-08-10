@@ -94,8 +94,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 26.5
-          cache: 'pnpm'
+          node-version: 26
+          cache: pnpm
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
