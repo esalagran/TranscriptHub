@@ -1,46 +1,95 @@
-import { Head, useForm } from "@inertiajs/react"
+"use client";
+
+import {
+    Button,
+    FieldError,
+    FieldGroup,
+    Fieldset,
+    Form,
+    Input,
+    Label,
+    TextField,
+} from "@heroui/react";
+import { Head, useForm } from "@inertiajs/react";
 
 export default function New() {
-  const { data, setData, post, processing, errors } = useForm({
-    email_address: "",
-  })
+    const { data, setData, post, processing, errors } = useForm({
+        email_address: "",
+    });
 
-  function submit(e: React.SubmitEvent) {
-    e.preventDefault()
+    function submit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
 
-    post("/passwords")
-  }
+        post("/passwords");
+    }
 
-  return (
-    <>
-      <Head title="Forgot your password?" />
+    return (
+        <>
+            <Head title="Forgot your password?" />
 
-      <h1>Forgot your password?</h1>
+            <div className="min-h-screen flex items-center justify-center px-4">
+                <Form
+                    className="w-full max-w-md"
+                    onSubmit={submit}
+                    validationErrors={errors}
+                >
+                    <Fieldset>
+                        <Fieldset.Legend>
+                            Forgot your password?
+                        </Fieldset.Legend>
 
-      {errors.email_address && (
-        <div style={{ color: "red" }}>
-          {errors.email_address}
-        </div>
-      )}
+                        <p className="text-sm text-default-500">
+                            Enter the email address associated with your
+                            account and we'll send you instructions to reset
+                            your password.
+                        </p>
 
-      <form onSubmit={submit}>
-        <input
-          type="email"
-          name="email_address"
-          required
-          autoFocus
-          autoComplete="username"
-          placeholder="Enter your email address"
-          value={data.email_address}
-          onChange={e => setData("email_address", e.target.value)}
-        />
+                        <FieldGroup>
+                            <TextField
+                                isRequired
+                                name="email_address"
+                                type="email"
+                                value={data.email_address}
+                                onChange={(value) =>
+                                    setData("email_address", value)
+                                }
+                                autoFocus
+                                autoComplete="username"
+                                validate={(value) => {
+                                    if (!value) {
+                                        return "Email is required.";
+                                    }
 
-        <br />
+                                    if (
+                                        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                                            value,
+                                        )
+                                    ) {
+                                        return "Please enter a valid email address.";
+                                    }
 
-        <button type="submit" disabled={processing}>
-          Email reset instructions
-        </button>
-      </form>
-    </>
-  )
+                                    return null;
+                                }}
+                            >
+                                <Label>Email</Label>
+                                <Input placeholder="you@example.com" />
+                                <FieldError />
+                            </TextField>
+                        </FieldGroup>
+
+                        <Fieldset.Actions>
+                            <Button
+                                type="submit"
+                                isDisabled={processing}
+                            >
+                                {processing
+                                    ? "Sending..."
+                                    : "Email reset instructions"}
+                            </Button>
+                        </Fieldset.Actions>
+                    </Fieldset>
+                </Form>
+            </div>
+        </>
+    );
 }
