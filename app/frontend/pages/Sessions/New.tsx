@@ -8,9 +8,10 @@ import {
     Form,
     Input,
     Label,
+    Link,
     TextField,
 } from "@heroui/react";
-import { useForm } from "@inertiajs/react";
+import { useForm, router } from "@inertiajs/react";
 
 export default function Login() {
     const { data, setData, post, processing, errors } = useForm({
@@ -64,6 +65,11 @@ export default function Login() {
                         >
                             <Label>Password</Label>
                             <Input placeholder="********" />
+                            <div className="flex justify-end">
+                                <Link href="/passwords/new">
+                                    Forgot password?
+                                </Link>
+                            </div>
                             <FieldError />
                         </TextField>
                     </FieldGroup>
@@ -79,9 +85,7 @@ export default function Login() {
                         <Button
                             type="button"
                             variant="secondary"
-                            onPress={() => {
-                                window.location.href = "/signup";
-                            }}
+                            onPress={() => router.visit("/signup")}
                         >
                             Register
                         </Button>
