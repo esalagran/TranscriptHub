@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   post "/signup", to: "registrations#create"
 
   # Password management
-  resources :passwords, param: :token, only: [:new, :create, :edit, :update]
+  resources :passwords, param: :token, only: [ :new, :create, :edit, :update ]
 
   # Health check
   get "up", to: "rails/health#show", as: :rails_health_check
