@@ -1,59 +1,144 @@
+"use client";
+
+import {
+    Button,
+    FieldError,
+    FieldGroup,
+    Fieldset,
+    Form,
+    Input,
+    Label,
+    TextField,
+} from "@heroui/react";
 import { useForm } from "@inertiajs/react";
-import { SubmitEvent } from "react";
 
+export default function Register() {
+    const { data, setData, post, processing, errors } = useForm({
+        user: {
+            email_address: "",
+            password: "",
+            password_confirmation: "",
+        },
+    });
 
-export default function New() {
-  const { data, setData, post, processing, errors } = useForm({
-    user: {
-      email_address: "",
-      password: "",
-      password_confirmation: "",
-    },
-  });
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-  function submit(e: SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
+        post("/signup");
+    };
 
-    post("/signin");
-  }
+    return (
+        <div className="min-h-screen flex items-center justify-center px-4">
+            <Form
+                className="w-full max-w-md"
+                onSubmit={handleSubmit}
+                validationErrors={errors}
+            >
+                <Fieldset>
+                    <Fieldset.Legend>Create your account</Fieldset.Legend>
 
-  return (
-    <form onSubmit={submit}>
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          value={data.user.email_address}
-          onChange={(e) => setData("user", { ...data.user, email_address: e.target.value })}
-        />
-        {errors["user.email_address"] && <div>{errors["user.email_address"]}</div>}
-      </div>
+                    <p className="text-sm text-default-500">
+                        Sign up to create your account.
+                    </p>
 
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          value={data.user.password}
-          onChange={(e) => setData("user", { ...data.user, password: e.target.value })}
-        />
-        {errors["user.password"] && <div>{errors["user.password"]}</div>}
-      </div>
+                    <FieldGroup>
+                        <TextField
+                            isRequired
+                            name="user.email_address"
+                            type="email"
+                            value={data.user.email_address}
+                            onChange={(value) =>
+                                setData("user", {
+                                    ...data.user,
+                                    email_address: value,
+                                })
+                            }
+                            validate={(value) => {
+                                if (!value) {
+                                    return "Email is required.";
+                                }
 
-      <div>
-        <label>Confirm password</label>
-        <input
-          type="password"
-          value={data.user.password_confirmation}
-          onChange={(e) =>
-            setData("user", { ...data.user, password_confirmation: e.target.value } )
-          }
-        />
-        {errors["user.password_confirmation"] && (
-          <div>{errors["user.password_confirmation"]}</div>
-        )}
-      </div>
+                                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                                    return "Please enter a valid email address.";
+                                }
 
-      <button disabled={processing}>Create account</button>
-    </form>
-  );
+                                return null;
+                            }}
+                        >
+                            <Label>Email</Label>
+                            <Input placeholder="you@example.com" />
+                            <FieldError />
+                        </TextField>
+
+                        <TextField
+                            isRequired
+                            name="user.password"
+                            type="password"
+                            value={data.user.password}
+                            onChange={(value) =>
+                                setData("user", {
+                                    ...data.user,
+                                    password: value,
+                                })
+                            }
+                            validate={(value) => {
+                                if (!value) {
+                                    return "Password is required.";
+                                }
+
+                                if (value.length < 8) {
+                                    return "Password must be at least 8 characters.";
+                                }
+
+                                return null;
+                            }}
+                        >
+                            <Label>Password</Label>
+                            <Input placeholder="********" />
+                            <FieldError />
+                        </TextField>
+
+                        <TextField
+                            isRequired
+                            name="user.password_confirmation"
+                            type="password"
+                            value={data.user.password_confirmation}
+                            onChange={(value) =>
+                                setData("user", {
+                                    ...data.user,
+                                    password_confirmation: value,
+                                })
+                            }
+                            validate={(value) => {
+                                if (!value) {
+                                    return "Please confirm your password.";
+                                }
+
+                                if (value !== data.user.password) {
+                                    return "Passwords do not match.";
+                                }
+
+                                return null;
+                            }}
+                        >
+                            <Label>Confirm password</Label>
+                            <Input placeholder="********" />
+                            <FieldError />
+                        </TextField>
+                    </FieldGroup>
+
+                    <Fieldset.Actions>
+                        <Button
+                            type="submit"
+                            isDisabled={processing}
+                        >
+                            {processing
+                                ? "Creating account..."
+                                : "Create account"}
+                        </Button>
+                    </Fieldset.Actions>
+                </Fieldset>
+            </Form>
+        </div>
+    );
 }
