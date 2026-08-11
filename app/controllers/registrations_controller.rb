@@ -13,7 +13,9 @@ class RegistrationsController < ApplicationController
     else
       render inertia: "Registrations/New",
              props: {
-               errors: user.errors.to_hash(full_messages: true)
+               errors: user.errors.to_hash.transform_keys do |key|
+                            "user.#{key}"
+                          end
              },
              status: :unprocessable_entity
     end
@@ -21,7 +23,7 @@ class RegistrationsController < ApplicationController
 
   private
 
-  def user_params
-    params.expect(user: [ :email_address, :password, :password_confirmation ])
-  end
+    def user_params
+      params.expect(user: [ :email_address, :password, :password_confirmation ])
+    end
 end
