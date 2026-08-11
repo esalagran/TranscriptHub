@@ -67,7 +67,6 @@ export default function Login() {
 
                 <Button
                     type="submit"
-                    color="primary"
                     isDisabled={processing}
                     className="w-full"
                 >
