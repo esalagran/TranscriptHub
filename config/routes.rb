@@ -3,24 +3,24 @@ Rails.application.routes.draw do
   constraints(host: "127.0.0.1") do
     get "(*path)", to: redirect { |params, req| "#{req.protocol}localhost:#{req.port}/#{params[:path]}" }
   end
-  get "inertia-example", to: "inertia_example#index"
 
-  resource :session
-  resources :passwords, param: :token
-  resource :registration, only: [ :new, :create ]
+  root "home#index"
 
   get "home/index"
-  get "/signup", to: "registrations#new"
-  get "/signin", to: "sessions#new"
-  get "/login", to: "sessions#new"
-  get "/logout", to: "sessions#destroy"
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "inertia-example", to: "inertia_example#index"
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  # Defines the root path route ("/")
-  root "home#index"
+  # Authentication
+  get    "/login",  to: "sessions#new",     as: :login
+  post   "/login",  to: "sessions#create"
+  delete "/logout", to: "sessions#destroy", as: :logout
+
+  # Registration
+  get "/signup", to: "registrations#new", as: :signup
+  post "/signup", to: "registrations#create"
+
+  # Password management
+  resources :passwords, param: :token, only: [ :new, :create, :edit, :update ]
+
+  # Health check
+  get "up", to: "rails/health#show", as: :rails_health_check
 end

@@ -1,63 +1,97 @@
-import { useForm } from "@inertiajs/react";
+"use client";
 
-export default function New({ flash, email_address }: { flash?: any; email_address?: string }) {
-  const { data, setData, post, processing } = useForm({
-    email_address: email_address || "",
-    password: "",
-  });
+import {
+    Button,
+    FieldError,
+    FieldGroup,
+    Fieldset,
+    Form,
+    Input,
+    Label,
+    Link,
+    TextField,
+} from "@heroui/react";
+import { useForm, router } from "@inertiajs/react";
 
-  const submit = (e: React.SubmitEvent) => {
-    e.preventDefault();
-    post("/session");
-  };
+export default function Login() {
+    const { data, setData, post, processing, errors } = useForm({
+        email_address: "",
+        password: "",
+    });
 
-  return (
-    <>
-      {flash?.alert && (
-        <div style={{ color: "red" }}>
-          {flash.alert}
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        post("/login");
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center px-4">
+            <Form
+                className="w-full max-w-md"
+                onSubmit={handleSubmit}
+                validationErrors={errors}
+            >
+                <Fieldset>
+                    <Fieldset.Legend>Welcome back</Fieldset.Legend>
+
+                    <p className="text-sm text-default-500">
+                        Sign in to your account.
+                    </p>
+
+                    <FieldGroup>
+                        <TextField
+                            isRequired
+                            name="email_address"
+                            type="email"
+                            value={data.email_address}
+                            onChange={(value) =>
+                                setData("email_address", value)
+                            }
+                        >
+                            <Label>Email</Label>
+                            <Input placeholder="you@example.com" />
+                            <FieldError />
+                        </TextField>
+
+                        <TextField
+                            isRequired
+                            name="password"
+                            type="password"
+                            value={data.password}
+                            onChange={(value) =>
+                                setData("password", value)
+                            }
+                        >
+                            <Label>Password</Label>
+                            <Input placeholder="********" />
+                            <div className="flex justify-end">
+                                <Link href="/passwords/new">
+                                    Forgot password?
+                                </Link>
+                            </div>
+                            <FieldError />
+                        </TextField>
+                    </FieldGroup>
+
+                    <Fieldset.Actions>
+                        <Button
+                            type="submit"
+                            isDisabled={processing}
+                        >
+                            {processing ? "Logging in..." : "Login"}
+                        </Button>
+
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            onPress={() => router.visit("/signup")}
+                        >
+                            Register
+                        </Button>
+                    </Fieldset.Actions>
+                </Fieldset>
+            </Form>
         </div>
-      )}
-
-      {flash?.notice && (
-        <div style={{ color: "green" }}>
-          {flash.notice}
-        </div>
-      )}
-
-      <form onSubmit={submit}>
-        <input
-          type="email"
-          required
-          autoFocus
-          autoComplete="username"
-          placeholder="Enter your email address"
-          value={data.email_address}
-          onChange={(e) => setData("email_address", e.target.value)}
-        />
-        <br />
-
-        <input
-          type="password"
-          required
-          autoComplete="current-password"
-          placeholder="Enter your password"
-          maxLength={72}
-          value={data.password}
-          onChange={(e) => setData("password", e.target.value)}
-        />
-        <br />
-
-        <button type="submit" disabled={processing}>
-          Sign in
-        </button>
-      </form>
-
-      <br />
-
-      <a href="/passwords/new">
-        Forgot password?
-      </a>
-    </>
-  );
+    );
 }

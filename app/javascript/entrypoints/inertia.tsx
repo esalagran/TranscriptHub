@@ -1,3 +1,5 @@
+import "./application.css";
+
 import { createInertiaApp } from '@inertiajs/react'
 import AppLayout from "../../frontend/layouts/AppLayout"
 
