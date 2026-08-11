@@ -2,14 +2,14 @@ require "test_helper"
 
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
-    get new_registration_url
+    get signup_path
 
     assert_response :success
   end
 
   test "should create registration" do
     assert_difference("User.count", 1) do
-      post registration_url, params: {
+      post signup_url, params: {
         user: {
           email_address: "test@example.com",
           password: "password123",
@@ -23,7 +23,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create registration with invalid data" do
     assert_no_difference("User.count") do
-      post registration_url, params: {
+      post signup_path, params: {
         user: {
           email_address: "",
           password: "",
