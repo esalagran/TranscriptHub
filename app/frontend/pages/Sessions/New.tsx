@@ -1,63 +1,56 @@
+"use client";
+
 import { useForm } from "@inertiajs/react";
+import {
+    Button,
+    FieldError,
+    Form,
+    Input,
+    Label,
+    TextField,
+} from "@heroui/react";
 
-export default function New({ flash, email_address }: { flash?: any; email_address?: string }) {
-  const { data, setData, post, processing } = useForm({
-    email_address: email_address || "",
-    password: "",
-  });
+export default function New() {
+    const { data, setData, post, processing, errors } = useForm({
+        email_address: "",
+        password: "",
+    });
 
-  const submit = (e: React.SubmitEvent) => {
-    e.preventDefault();
-    post("/session");
-  };
+    return (
+        <Form onSubmit={(e) => {
+            e.preventDefault();
+            post("/login");
+        }} validationErrors={errors} className="w-full max-w-md space-y-4">
+            <TextField
+                isRequired
+                name="email_address"
+                type="email"
+                value={data.email_address}
+                onChange={(value) => setData("email_address", value)}
+            >
+                <Label>Email</Label>
+                <Input placeholder="you@example.com" />
+                <FieldError />
+            </TextField>
 
-  return (
-    <>
-      {flash?.alert && (
-        <div style={{ color: "red" }}>
-          {flash.alert}
-        </div>
-      )}
+            <TextField
+                isRequired
+                name="password"
+                type="password"
+                value={data.password}
+                onChange={(value) => setData("password", value)}
+            >
+                <Label>Password</Label>
+                <Input placeholder="********" />
+                <FieldError />
+            </TextField>
 
-      {flash?.notice && (
-        <div style={{ color: "green" }}>
-          {flash.notice}
-        </div>
-      )}
-
-      <form onSubmit={submit}>
-        <input
-          type="email"
-          required
-          autoFocus
-          autoComplete="username"
-          placeholder="Enter your email address"
-          value={data.email_address}
-          onChange={(e) => setData("email_address", e.target.value)}
-        />
-        <br />
-
-        <input
-          type="password"
-          required
-          autoComplete="current-password"
-          placeholder="Enter your password"
-          maxLength={72}
-          value={data.password}
-          onChange={(e) => setData("password", e.target.value)}
-        />
-        <br />
-
-        <button type="submit" disabled={processing}>
-          Sign in
-        </button>
-      </form>
-
-      <br />
-
-      <a href="/passwords/new">
-        Forgot password?
-      </a>
-    </>
-  );
+            <Button
+                type="submit"
+                isDisabled={processing}
+            >
+                Login
+            </Button>
+        </Form>
+    );
 }

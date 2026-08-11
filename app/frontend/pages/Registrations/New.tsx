@@ -14,7 +14,7 @@ export default function New() {
   function submit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    post("/registration");
+    post("/signin");
   }
 
   return (

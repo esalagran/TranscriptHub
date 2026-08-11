@@ -1,6 +1,8 @@
 import { createInertiaApp } from '@inertiajs/react'
 import AppLayout from "../../frontend/layouts/AppLayout"
 
+import "../styles/application.css";
+
 void createInertiaApp({
   pages: "../../frontend/pages",
 

@@ -8,6 +8,13 @@
       "language_servers": ["ruby-lsp", "!solargraph", "!rubocop"],
       "formatter": "language_server",
       "format_on_save": "on"
+    },
+    "TypeScript": {
+      "format_on_save": "on",
+      "indent_guides": {
+        "background_coloring": "indent_aware"
+      },
+      "prettier": { "allowed": true }
     }
   },
   "lsp": {
@@ -17,6 +24,23 @@
         "linters": ["standard"],
         "enabledFeatures": {
           "formatting": true
+        }
+      }
+    },
+    "tailwindcss-language-server": {
+      "settings": {
+        "experimental": {
+          "classRegex": [
+            "\\.className\\s*[+]?=\\s*['\"]([^'\"]*)['\"]",
+            "\\.setAttributeNS\\(.*,\\s*['\"]class['\"],\\s*['\"]([^'\"]*)['\"]",
+            "\\.setAttribute\\(['\"]class['\"],\\s*['\"]([^'\"]*)['\"]",
+            "\\.classList\\.add\\(['\"]([^'\"]*)['\"]",
+            "\\.classList\\.remove\\(['\"]([^'\"]*)['\"]",
+            "\\.classList\\.toggle\\(['\"]([^'\"]*)['\"]",
+            "\\.classList\\.contains\\(['\"]([^'\"]*)['\"]",
+            "\\.classList\\.replace\\(\\s*['\"]([^'\"]*)['\"]",
+            "\\.classList\\.replace\\([^,)]+,\\s*['\"]([^'\"]*)['\"]"
+          ]
         }
       }
     }
