@@ -2,4 +2,4 @@ pre-commit:
   commands:
     rubocop:
       glob: "*.rb"
-      run: bundle exec rubocop {staged_files}
+      run: bundle exec rubocop
