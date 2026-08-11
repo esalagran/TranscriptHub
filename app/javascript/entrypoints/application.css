@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import '@heroui/styles';
 
+@source "../../frontend/**/*.{js,jsx,ts,tsx}";
+
 :root,
 .light,
 .default,
