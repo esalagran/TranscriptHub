@@ -1,10 +1,10 @@
 ## Roadmap
 
 ### Phase 1 — Rails Foundation
-- [ ] Create Rails application
-- [ ] Authentication
-- [ ] Projects CRUD
-- [ ] Database relationships
+- [ x ] Create Rails application
+- [ x ] Authentication
+- [ x ] Design System
+- [ x ] Deployment
 
 ### Phase 2 — Transcripts
 - [ ] File uploads
