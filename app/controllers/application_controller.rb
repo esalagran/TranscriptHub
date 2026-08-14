@@ -6,10 +6,7 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-  inertia_share flash: -> {
-      {
-        notice: flash[:notice],
-        alert: flash[:alert]
-      }
-    }
+  inertia_share do
+      InertiaSharedProps.new(current: Current, flash: flash).to_h
+    end
 end
