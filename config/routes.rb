@@ -23,4 +23,7 @@ Rails.application.routes.draw do
 
   # Health check
   get "up", to: "rails/health#show", as: :rails_health_check
+
+  # File uploader
+  get "/files", to: "file_uploader#index", as: :files
 end
