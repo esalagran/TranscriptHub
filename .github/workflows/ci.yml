@@ -92,7 +92,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 11.20.0
           run_install: false
@@ -104,6 +104,9 @@ jobs:
 
       - name: Install JavaScript dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Generate JS routes
+        run: bin/rails js:routes
 
       - name: Run tests
         env:
@@ -132,6 +135,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Generate JS routes
+        run: bin/rails js:routes
 
       - name: Run System Tests
         env:
