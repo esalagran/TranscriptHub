@@ -31,7 +31,7 @@ JsRoutes.setup do |c|
   # This option is transitional to introduce new behaviour to old apps.
   # Recommended to stay false for new apps.
   c.include_undefined_query_parameters = false
-  config.file = Rails.root.join("app/frontend/routes.js")
+  c.file = Rails.root.join("app/frontend/routes.js")
 
   # More options:
   # @see https://github.com/railsware/js-routes#available-options
