@@ -133,6 +133,9 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Generate JS routes
+        run: bin/rails js:routes
+
       - name: Run System Tests
         env:
           RAILS_ENV: test
