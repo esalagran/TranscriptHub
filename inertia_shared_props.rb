@@ -13,10 +13,10 @@ class InertiaSharedProps
 
   private
 
-  attr_reader :current, :flash
+    attr_reader :current, :flash
 
-  def user_props
-    return nil unless current.user
-    { email_address: current.user.email_address }
-  end
+    def user_props
+      return nil unless current.user
+      { email_address: current.user.email_address }
+    end
 end
