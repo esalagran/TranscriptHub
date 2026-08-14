@@ -6,7 +6,7 @@ function Index() {
     <>
       <Head title="Home" />
 
-      <h1>Home</h1>
+      Home
     </>
   )
 }
