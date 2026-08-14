@@ -6,7 +6,7 @@ import AppLayout from "../../frontend/layouts/AppLayout"
 void createInertiaApp({
   pages: "../../frontend/pages",
 
-  layout: () => AppLayout,
+  layout: (_, page) => (page.props.user ? AppLayout : null),
 
   strictMode: true,
 

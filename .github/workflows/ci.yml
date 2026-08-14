@@ -105,6 +105,9 @@ jobs:
       - name: Install JavaScript dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate JS routes
+        run: bin/rails js:routes
+
       - name: Run tests
         env:
           RAILS_ENV: test
@@ -132,6 +135,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Generate JS routes
+        run: bin/rails js:routes
 
       - name: Run System Tests
         env:

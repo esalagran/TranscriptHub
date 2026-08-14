@@ -25,7 +25,7 @@ production:
     adapter: sqlite3
     database: storage/production_cable.sqlite3
     migrations_paths: db/cable_migrate
-  
+
   queue:
     <<: *default
     adapter: sqlite3

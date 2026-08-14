@@ -91,3 +91,9 @@ node_modules
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+
+# Ignore automatically generated js-routes files.
+/app/javascript/routes.js
+/app/javascript/routes.d.ts
+/app/frontend/routes.js
+/app/frontend/routes.d.ts
