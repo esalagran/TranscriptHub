@@ -25,5 +25,5 @@ Rails.application.routes.draw do
   get "up", to: "rails/health#show", as: :rails_health_check
 
   # File uploader
-  get "/files", to: "file_uploader#index", as: :files
+  resources :files, controller: "file_uploader", except: %i[new edit show]
 end

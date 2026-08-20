@@ -10,4 +10,6 @@ class StoredFile < ApplicationRecord
     archived:    "archived",
     deleted:     "deleted"
   }, validate: true
+
+  scope :visible, -> { where.not(status: :deleted) }
 end

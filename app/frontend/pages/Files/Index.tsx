@@ -1,7 +1,8 @@
 import { Head, Link } from "@inertiajs/react";
-import { Table, Chip, Tooltip, SearchField, Label } from "@heroui/react";
+import { Table, Chip, Tooltip, SearchField, Button, IconPlus } from "@heroui/react";
 import type { ChipProps } from "@heroui/react";
 import { useMemo, useState } from "react";
+import NewFileModal from "../../components/files/NewFileModal";
 
 // Mirrors the `files` table schema (metadata only).
 interface FileRecord {
@@ -46,6 +47,7 @@ function truncateHash(hash: string | null) {
 
 export default function Index({ files }: IndexProps) {
   const [query, setQuery] = useState("");
+  const [isNewFileOpen, setIsNewFileOpen] = useState(false);
 
   const filteredFiles = useMemo(() => {
     if (!query.trim()) return files;
@@ -62,6 +64,7 @@ export default function Index({ files }: IndexProps) {
   return (
     <>
       <Head title="Files" />
+      <NewFileModal isOpen={isNewFileOpen} onOpenChange={setIsNewFileOpen} />
 
       <div className="p-6 max-w-6xl mx-auto flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">
@@ -72,15 +75,18 @@ export default function Index({ files }: IndexProps) {
             </p>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <SearchField name="search" onChange={(e) => setQuery(e)} value={query} fullWidth>
-              <Label>Search</Label>
                   <SearchField.Group>
                     <SearchField.SearchIcon />
                     <SearchField.Input placeholder="Search..." />
                     <SearchField.ClearButton />
                   </SearchField.Group>
-                </SearchField>
+            </SearchField>
+            <Button variant="primary" onPress={() => setIsNewFileOpen(true)}>
+              <IconPlus className="w-4 h-4" />
+              Upload File
+            </Button>
           </div>
         </div>
 
