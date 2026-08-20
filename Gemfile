@@ -75,4 +75,5 @@ gem "pg", "~> 1.6.3"
 
 gem "vite_rails", "~> 3.11"
 
-gem "js-routes"
+gem "alba"
+gem "typelizer"

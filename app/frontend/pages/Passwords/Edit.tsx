@@ -1,5 +1,6 @@
 "use client";
 
+import PasswordsController from "@/routes/PasswordsController";
 import {
     Button,
     FieldError,
@@ -17,7 +18,7 @@ type Props = {
 };
 
 export default function Edit({ token }: Props) {
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, patch, processing, errors } = useForm({
         password: "",
         password_confirmation: "",
     });
@@ -25,7 +26,7 @@ export default function Edit({ token }: Props) {
     function submit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        put(`/passwords/${token}`);
+        patch(PasswordsController.update(token).url);
     }
 
     return (

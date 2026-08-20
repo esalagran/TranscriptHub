@@ -1,4 +1,6 @@
 import { FormEventHandler } from 'react';
+import { StoredFile } from '@/types/serializers';
+
 import {
   Form,
   TextField,
@@ -10,15 +12,12 @@ import {
   Modal,
 } from '@heroui/react';
 
-export interface StoredFileFormData {
-  name: string;
-  description: string;
-}
+type UpdatableFields = Pick<StoredFile, 'name' | 'description'>;
 
 interface StoredFileFormProps {
-  data: StoredFileFormData;
-  setData: (key: keyof StoredFileFormData, value: string) => void;
-  errors: Partial<Record<keyof StoredFileFormData, string[]>>;
+  data: UpdatableFields;
+  setData: (key: keyof StoredFile, value: string) => void;
+  errors: Partial<Record<keyof StoredFile, string[]>>;
   processing: boolean;
   onSubmit: FormEventHandler<HTMLFormElement>;
   onCancel: () => void;
@@ -58,7 +57,7 @@ export default function StoredFileForm({
           name="name"
           isRequired
           isInvalid={!!errors.name}
-          value={data.name}
+          value={data.name ?? ''}
           onChange={(value) => setData('name', value)}
           fullWidth
         >
@@ -70,7 +69,7 @@ export default function StoredFileForm({
         <TextField
           name="description"
           isInvalid={!!errors.description}
-          value={data.description}
+          value={data.description ?? ''}
           onChange={(value) => setData('description', value)}
           fullWidth
         >

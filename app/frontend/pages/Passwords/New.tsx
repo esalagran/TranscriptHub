@@ -1,5 +1,6 @@
 "use client";
 
+import PasswordsController from "@/routes/PasswordsController";
 import {
     Button,
     FieldError,
@@ -20,7 +21,7 @@ export default function New() {
     function submit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        post("/passwords");
+        post(PasswordsController.create().url);
     }
 
     return (
