@@ -1,5 +1,6 @@
 "use client";
 
+import SessionsController from "@/routes/SessionsController";
 import {
     Button,
     FieldError,
@@ -22,7 +23,7 @@ export default function Login() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post("/login");
+        post(SessionsController.create().url);
     };
 
     return (

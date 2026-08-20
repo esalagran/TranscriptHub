@@ -1,5 +1,6 @@
 "use client";
 
+import RegistrationsController from "@/routes/RegistrationsController";
 import {
     Button,
     FieldError,
@@ -24,7 +25,7 @@ export default function Register() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post("/signup");
+        post(RegistrationsController.create().url);
     };
 
     return (

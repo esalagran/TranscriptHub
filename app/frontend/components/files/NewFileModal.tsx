@@ -1,6 +1,7 @@
 import { Modal } from '@heroui/react';
 import { useForm } from '@inertiajs/react';
 import StoredFileForm from './StoredFileForm';
+import { fileUploader } from '@/routes';
 
 interface NewFileModalProps {
   isOpen: boolean;
@@ -20,7 +21,7 @@ export default function NewFileModal({ isOpen, onOpenChange }: NewFileModalProps
 
   const submit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    post('/files', {
+    post(fileUploader.create().url, {
       onSuccess: close,
       preserveScroll: true,
     });
