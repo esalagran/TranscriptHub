@@ -1,7 +1,7 @@
 // app/frontend/components/Sidebar.tsx
 import { Link, usePage } from "@inertiajs/react"
-import { root_path, logout_path } from "../routes"
 import { SharedProps } from "../types/inertia"
+import { home, sessions } from "@/routes"
 
 export default function Sidebar() {
   const { url, props } = usePage<SharedProps>()
@@ -15,9 +15,9 @@ export default function Sidebar() {
 
       <nav className="flex flex-col gap-1">
         <Link
-          href={root_path()}
+          href={home.root().url}
           className={`rounded px-3 py-2 text-sm ${
-            isActive(root_path())
+            isActive(home.root().url)
               ? "bg-gray-200 text-gray-900 font-medium"
               : "text-gray-700 hover:bg-gray-200"
           }`}
@@ -33,8 +33,8 @@ export default function Sidebar() {
           </div>
         )}
         <Link
-          href={logout_path()}
-          method="delete"
+          href={sessions.destroy().url}
+          method={sessions.destroy().method}
           as="button"
           className="w-full text-left rounded px-3 py-2 text-sm text-gray-700 hover:bg-gray-200"
         >
