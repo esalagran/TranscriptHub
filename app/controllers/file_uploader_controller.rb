@@ -3,12 +3,10 @@ class FileUploaderController < ApplicationController
   wrap_parameters :stored_file, include: %i[name description]
 
   def index
-    files = Current.user.stored_files.visible.order(created_at: :desc)
+    files = StoredFileSerializer.new(Current.user.stored_files.visible.order(created_at: :desc))
 
     render inertia: "Files/Index", props: {
-      files: files.as_json(
-        only: %i[id name description status file_hash user_id created_at updated_at]
-      )
+      files: files.to_h()
     }
     end
 
