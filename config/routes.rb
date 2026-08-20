@@ -23,4 +23,7 @@ Rails.application.routes.draw do
 
   # Health check
   get "up", to: "rails/health#show", as: :rails_health_check
+
+  # File uploader
+  resources :files, controller: "file_uploader", except: %i[new edit show]
 end
