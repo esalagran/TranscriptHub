@@ -1,5 +1,5 @@
-import { FormEventHandler } from 'react';
-import { StoredFile } from '@/types/serializers';
+import { FormEventHandler } from "react";
+import { StoredFile } from "@/types/serializers";
 
 import {
   Form,
@@ -10,9 +10,9 @@ import {
   FieldError,
   Button,
   Modal,
-} from '@heroui/react';
+} from "@heroui/react";
 
-type UpdatableFields = Pick<StoredFile, 'name' | 'description'>;
+type UpdatableFields = Pick<StoredFile, "name" | "description">;
 
 interface StoredFileFormProps {
   data: UpdatableFields;
@@ -21,7 +21,7 @@ interface StoredFileFormProps {
   processing: boolean;
   onSubmit: FormEventHandler<HTMLFormElement>;
   onCancel: () => void;
-  submitLabel: 'Create' | 'Update';
+  submitLabel: "Create" | "Update";
 }
 
 export default function StoredFileForm({
@@ -36,7 +36,7 @@ export default function StoredFileForm({
   const validationErrors = Object.fromEntries(
     Object.entries(errors)
       .filter(([, message]) => !!message)
-      .map(([field, message]) => [field, message])
+      .map(([field, message]) => [field, message]),
   );
 
   return (
@@ -48,7 +48,7 @@ export default function StoredFileForm({
     >
       <Modal.Header>
         <Modal.Heading>
-          {submitLabel === 'Create' ? 'New File' : 'Edit File'}
+          {submitLabel === "Create" ? "New File" : "Edit File"}
         </Modal.Heading>
       </Modal.Header>
 
@@ -57,8 +57,8 @@ export default function StoredFileForm({
           name="name"
           isRequired
           isInvalid={!!errors.name}
-          value={data.name ?? ''}
-          onChange={(value) => setData('name', value)}
+          value={data.name ?? ""}
+          onChange={(value) => setData("name", value)}
           fullWidth
         >
           <Label>Name</Label>
@@ -69,8 +69,8 @@ export default function StoredFileForm({
         <TextField
           name="description"
           isInvalid={!!errors.description}
-          value={data.description ?? ''}
-          onChange={(value) => setData('description', value)}
+          value={data.description ?? ""}
+          onChange={(value) => setData("description", value)}
           fullWidth
         >
           <Label>Description</Label>

@@ -4,15 +4,15 @@ import { fileUploader } from "@/routes";
 import { useState } from "react";
 import { router } from "@inertiajs/react";
 
-
-
 interface RemoveFileModalProps {
   onOpenChange: (open: boolean) => void;
   storedFile: StoredFile;
 }
 
-export default function RemoveFileModal({ onOpenChange, storedFile }: RemoveFileModalProps) {
-
+export default function RemoveFileModal({
+  onOpenChange,
+  storedFile,
+}: RemoveFileModalProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const close = () => onOpenChange(false);
@@ -27,6 +27,14 @@ export default function RemoveFileModal({ onOpenChange, storedFile }: RemoveFile
   };
 
   return (
-    <RemoveElementDialog onOpenChange={(open) => !isDeleting && onOpenChange(open)} confirm="Delete" cancel="Cancel" body="This will permanently delete your file from our servers. This action is irreversible" header="Delete File" onConfirm={handleConfirm} onCancel={close} />
+    <RemoveElementDialog
+      onOpenChange={(open) => !isDeleting && onOpenChange(open)}
+      confirm="Delete"
+      cancel="Cancel"
+      body="This will permanently delete your file from our servers. This action is irreversible"
+      header="Delete File"
+      onConfirm={handleConfirm}
+      onCancel={close}
+    />
   );
 }

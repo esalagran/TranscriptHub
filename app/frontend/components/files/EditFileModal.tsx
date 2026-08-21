@@ -1,16 +1,18 @@
-import { Modal } from '@heroui/react';
-import { useForm } from '@inertiajs/react';
-import StoredFileForm from './StoredFileForm';
-import { StoredFile } from '@/types/serializers';
-import { fileUploader } from '@/routes';
-
+import { Modal } from "@heroui/react";
+import { useForm } from "@inertiajs/react";
+import StoredFileForm from "./StoredFileForm";
+import { StoredFile } from "@/types/serializers";
+import { fileUploader } from "@/routes";
 
 interface EditFileModalProps {
   onOpenChange: (isOpen: boolean) => void;
   storedFile: StoredFile;
 }
 
-export default function EditFileModal({ onOpenChange, storedFile }: EditFileModalProps) {
+export default function EditFileModal({
+  onOpenChange,
+  storedFile,
+}: EditFileModalProps) {
   const { data, setData, patch, processing, errors, reset } = useForm({
     name: storedFile.name,
     description: storedFile.description,
@@ -34,7 +36,11 @@ export default function EditFileModal({ onOpenChange, storedFile }: EditFileModa
       <Modal.Trigger tabIndex={0} className="sr-only">
         Open
       </Modal.Trigger>
-      <Modal.Backdrop isOpen onOpenChange={(open) => !open && onOpenChange(open)} isDismissable>
+      <Modal.Backdrop
+        isOpen
+        onOpenChange={(open) => !open && onOpenChange(open)}
+        isDismissable
+      >
         <Modal.Container placement="center" size="md">
           <Modal.Dialog aria-label="New file">
             <StoredFileForm

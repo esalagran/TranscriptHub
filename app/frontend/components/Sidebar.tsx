@@ -1,13 +1,13 @@
 // app/frontend/components/Sidebar.tsx
-import { Link, usePage } from "@inertiajs/react"
-import { SharedProps } from "../types/inertia"
-import { home, sessions } from "@/routes"
+import { Link, usePage } from "@inertiajs/react";
+import { SharedProps } from "../types/inertia";
+import { home, sessions } from "@/routes";
 
 export default function Sidebar() {
-  const { url, props } = usePage<SharedProps>()
-  const { user } = props
+  const { url, props } = usePage<SharedProps>();
+  const { user } = props;
 
-  const isActive = (path: string) => url === path
+  const isActive = (path: string) => url === path;
 
   return (
     <aside className="w-64 shrink-0 border-r border-gray-200 bg-gray-50 p-4 flex flex-col">
@@ -42,5 +42,5 @@ export default function Sidebar() {
         </Link>
       </div>
     </aside>
-  )
+  );
 }

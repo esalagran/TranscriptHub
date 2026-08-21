@@ -1,0 +1,9 @@
+pre-commit:
+  commands:
+    rubocop:
+      glob: "*.rb"
+      run: bundle exec rubocop
+    prettier:
+      glob: "*.{js,ts,jsx,tsx,json,css,md}"
+      run: pnpm exec prettier --ignore-unknown --write {staged_files}
+      stage_fixed: true

@@ -1,0 +1,3 @@
+allowBuilds:
+  lefthook: true
+  simple-git-hooks: false

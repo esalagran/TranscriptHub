@@ -1,11 +1,18 @@
 import { Head, Link } from "@inertiajs/react";
-import { Table, Chip, Tooltip, SearchField, Button, IconPlus } from "@heroui/react";
+import {
+  Table,
+  Chip,
+  Tooltip,
+  SearchField,
+  Button,
+  IconPlus,
+} from "@heroui/react";
 import type { ChipProps } from "@heroui/react";
 import { useMemo, useState } from "react";
 import NewFileModal from "../../components/files/NewFileModal";
 import EditFileModal from "../../components/files/EditFileModal";
 
-import {Pencil, TrashBin} from "@gravity-ui/icons";
+import { Pencil, TrashBin } from "@gravity-ui/icons";
 import { StoredFile } from "@/types/serializers";
 import RemoveFileModal from "../../components/files/RemoveFileModal";
 
@@ -17,7 +24,6 @@ type FileAction =
   | { type: "edit"; file: StoredFile }
   | { type: "remove"; file: StoredFile }
   | null;
-
 
 // v3 Chip colors: "default" | "accent" | "success" | "warning" | "danger"
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -50,8 +56,6 @@ export default function Index({ files }: IndexProps) {
   const [fileAction, setFileAction] = useState<FileAction>(null);
   const closeFileAction = () => setFileAction(null);
 
-
-
   const filteredFiles = useMemo(() => {
     if (!query.trim()) return files;
     const q = query.toLowerCase();
@@ -69,10 +73,16 @@ export default function Index({ files }: IndexProps) {
       <Head title="Files" />
       <NewFileModal isOpen={isNewFileOpen} onOpenChange={setIsNewFileOpen} />
       {fileAction?.type === "edit" && (
-        <EditFileModal storedFile={fileAction.file} onOpenChange={closeFileAction} />
+        <EditFileModal
+          storedFile={fileAction.file}
+          onOpenChange={closeFileAction}
+        />
       )}
       {fileAction?.type === "remove" && (
-        <RemoveFileModal storedFile={fileAction.file} onOpenChange={closeFileAction} />
+        <RemoveFileModal
+          storedFile={fileAction.file}
+          onOpenChange={closeFileAction}
+        />
       )}
 
       <div className="p-6 max-w-6xl mx-auto flex flex-col gap-4">
@@ -85,12 +95,18 @@ export default function Index({ files }: IndexProps) {
           </div>
 
           <div className="flex items-center gap-4">
-            <SearchField name="search" onChange={(e) => setQuery(e)} value={query} fullWidth aria-label="Search files">
-                  <SearchField.Group>
-                    <SearchField.SearchIcon />
-                    <SearchField.Input placeholder="Search..." />
-                    <SearchField.ClearButton />
-                  </SearchField.Group>
+            <SearchField
+              name="search"
+              onChange={(e) => setQuery(e)}
+              value={query}
+              fullWidth
+              aria-label="Search files"
+            >
+              <SearchField.Group>
+                <SearchField.SearchIcon />
+                <SearchField.Input placeholder="Search..." />
+                <SearchField.ClearButton />
+              </SearchField.Group>
             </SearchField>
             <Button variant="primary" onPress={() => setIsNewFileOpen(true)}>
               <IconPlus className="w-4 h-4" />
@@ -103,7 +119,9 @@ export default function Index({ files }: IndexProps) {
           <Table.ScrollContainer>
             <Table.Content aria-label="Files table">
               <Table.Header>
-                <Table.Column isRowHeader id="name">NAME</Table.Column>
+                <Table.Column isRowHeader id="name">
+                  NAME
+                </Table.Column>
                 <Table.Column id="description">DESCRIPTION</Table.Column>
                 <Table.Column id="status">STATUS</Table.Column>
                 <Table.Column id="file_hash">HASH</Table.Column>
@@ -176,10 +194,26 @@ export default function Index({ files }: IndexProps) {
                     </Table.Cell>
                     <Table.Cell>
                       <div className="flex items-center gap-1">
-                        <Button isIconOnly size="sm" variant="tertiary" aria-label="Edit file" onClick={() => {setFileAction({ type: "edit", file })}}>
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="tertiary"
+                          aria-label="Edit file"
+                          onClick={() => {
+                            setFileAction({ type: "edit", file });
+                          }}
+                        >
                           <Pencil className="size-4" />
                         </Button>
-                        <Button isIconOnly size="sm" variant="danger-soft" aria-label="Remove file" onClick={() => {setFileAction({ type: "remove", file })}}>
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="danger-soft"
+                          aria-label="Remove file"
+                          onClick={() => {
+                            setFileAction({ type: "remove", file });
+                          }}
+                        >
                           <TrashBin className="size-4" />
                         </Button>
                       </div>
