@@ -19,6 +19,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@gravity-ui/icons": "^2.21.0",
     "@heroui/react": "^3.2.4",
     "@heroui/styles": "^3.2.4",
     "@inertiajs/react": "^3.6.1",

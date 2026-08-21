@@ -38,7 +38,7 @@ class FileUploaderController < ApplicationController
   private
 
     def set_stored_file
-      @stored_file = current_user.stored_files.visible.find(params[:id])
+      @stored_file = Current.user.stored_files.visible.find(params[:id])
     end
 
     def stored_file_params

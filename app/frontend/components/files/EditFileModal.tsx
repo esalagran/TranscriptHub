@@ -1,17 +1,19 @@
 import { Modal } from '@heroui/react';
 import { useForm } from '@inertiajs/react';
 import StoredFileForm from './StoredFileForm';
+import { StoredFile } from '@/types/serializers';
 import { fileUploader } from '@/routes';
 
-interface NewFileModalProps {
-  isOpen: boolean;
+
+interface EditFileModalProps {
   onOpenChange: (isOpen: boolean) => void;
+  storedFile: StoredFile;
 }
 
-export default function NewFileModal({ isOpen, onOpenChange }: NewFileModalProps) {
-  const { data, setData, post, processing, errors, reset } = useForm({
-    name: '',
-    description: '',
+export default function EditFileModal({ onOpenChange, storedFile }: EditFileModalProps) {
+  const { data, setData, patch, processing, errors, reset } = useForm({
+    name: storedFile.name,
+    description: storedFile.description,
   });
 
   const close = () => {
@@ -21,7 +23,7 @@ export default function NewFileModal({ isOpen, onOpenChange }: NewFileModalProps
 
   const submit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    post(fileUploader.create().url, {
+    patch(fileUploader.update(storedFile.id).url, {
       onSuccess: close,
       preserveScroll: true,
     });
@@ -29,8 +31,10 @@ export default function NewFileModal({ isOpen, onOpenChange }: NewFileModalProps
 
   return (
     <Modal>
-      <Modal.Trigger className="sr-only" />
-      <Modal.Backdrop isOpen={isOpen} onOpenChange={onOpenChange} isDismissable>
+      <Modal.Trigger tabIndex={0} className="sr-only">
+        Open
+      </Modal.Trigger>
+      <Modal.Backdrop isOpen onOpenChange={(open) => !open && onOpenChange(open)} isDismissable>
         <Modal.Container placement="center" size="md">
           <Modal.Dialog aria-label="New file">
             <StoredFileForm
@@ -40,7 +44,7 @@ export default function NewFileModal({ isOpen, onOpenChange }: NewFileModalProps
               processing={processing}
               onSubmit={submit}
               onCancel={close}
-              submitLabel="Create"
+              submitLabel="Update"
             />
           </Modal.Dialog>
         </Modal.Container>
