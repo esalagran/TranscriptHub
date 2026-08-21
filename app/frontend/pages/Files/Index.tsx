@@ -3,22 +3,21 @@ import { Table, Chip, Tooltip, SearchField, Button, IconPlus } from "@heroui/rea
 import type { ChipProps } from "@heroui/react";
 import { useMemo, useState } from "react";
 import NewFileModal from "../../components/files/NewFileModal";
+import EditFileModal from "../../components/files/EditFileModal";
 
-// Mirrors the `files` table schema (metadata only).
-interface FileRecord {
-  id: number;
-  created_at: string;
-  updated_at: string;
-  description: string | null;
-  file_hash: string | null;
-  name: string | null;
-  status: "uploading" | "processing" | "completed" | "failed" | string;
-  user_id: number;
-}
+import {Pencil, TrashBin} from "@gravity-ui/icons";
+import { StoredFile } from "@/types/serializers";
+import RemoveFileModal from "../../components/files/RemoveFileModal";
 
 interface IndexProps {
-  files: FileRecord[];
+  files: StoredFile[];
 }
+
+type FileAction =
+  | { type: "edit"; file: StoredFile }
+  | { type: "remove"; file: StoredFile }
+  | null;
+
 
 // v3 Chip colors: "default" | "accent" | "success" | "warning" | "danger"
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -48,6 +47,10 @@ function truncateHash(hash: string | null) {
 export default function Index({ files }: IndexProps) {
   const [query, setQuery] = useState("");
   const [isNewFileOpen, setIsNewFileOpen] = useState(false);
+  const [fileAction, setFileAction] = useState<FileAction>(null);
+  const closeFileAction = () => setFileAction(null);
+
+
 
   const filteredFiles = useMemo(() => {
     if (!query.trim()) return files;
@@ -65,6 +68,12 @@ export default function Index({ files }: IndexProps) {
     <>
       <Head title="Files" />
       <NewFileModal isOpen={isNewFileOpen} onOpenChange={setIsNewFileOpen} />
+      {fileAction?.type === "edit" && (
+        <EditFileModal storedFile={fileAction.file} onOpenChange={closeFileAction} />
+      )}
+      {fileAction?.type === "remove" && (
+        <RemoveFileModal storedFile={fileAction.file} onOpenChange={closeFileAction} />
+      )}
 
       <div className="p-6 max-w-6xl mx-auto flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">
@@ -76,7 +85,7 @@ export default function Index({ files }: IndexProps) {
           </div>
 
           <div className="flex items-center gap-4">
-            <SearchField name="search" onChange={(e) => setQuery(e)} value={query} fullWidth>
+            <SearchField name="search" onChange={(e) => setQuery(e)} value={query} fullWidth aria-label="Search files">
                   <SearchField.Group>
                     <SearchField.SearchIcon />
                     <SearchField.Input placeholder="Search..." />
@@ -94,13 +103,13 @@ export default function Index({ files }: IndexProps) {
           <Table.ScrollContainer>
             <Table.Content aria-label="Files table">
               <Table.Header>
-                <Table.Column id="name">NAME</Table.Column>
+                <Table.Column isRowHeader id="name">NAME</Table.Column>
                 <Table.Column id="description">DESCRIPTION</Table.Column>
                 <Table.Column id="status">STATUS</Table.Column>
                 <Table.Column id="file_hash">HASH</Table.Column>
-                <Table.Column id="user_id">USER ID</Table.Column>
                 <Table.Column id="created_at">CREATED AT</Table.Column>
                 <Table.Column id="updated_at">UPDATED AT</Table.Column>
+                <Table.Column className="text-end">ACTIONS</Table.Column>
               </Table.Header>
 
               <Table.Body
@@ -155,10 +164,6 @@ export default function Index({ files }: IndexProps) {
                     </Table.Cell>
 
                     <Table.Cell>
-                      <span className="text-default-500">{file.user_id}</span>
-                    </Table.Cell>
-
-                    <Table.Cell>
                       <span className="text-default-500 text-sm">
                         {formatDate(file.created_at)}
                       </span>
@@ -168,6 +173,16 @@ export default function Index({ files }: IndexProps) {
                       <span className="text-default-500 text-sm">
                         {formatDate(file.updated_at)}
                       </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex items-center gap-1">
+                        <Button isIconOnly size="sm" variant="tertiary" aria-label="Edit file" onClick={() => {setFileAction({ type: "edit", file })}}>
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button isIconOnly size="sm" variant="danger-soft" aria-label="Remove file" onClick={() => {setFileAction({ type: "remove", file })}}>
+                          <TrashBin className="size-4" />
+                        </Button>
+                      </div>
                     </Table.Cell>
                   </Table.Row>
                 )}
