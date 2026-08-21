@@ -1,17 +1,20 @@
-import { Modal } from '@heroui/react';
-import { useForm } from '@inertiajs/react';
-import StoredFileForm from './StoredFileForm';
-import { fileUploader } from '@/routes';
+import { Modal } from "@heroui/react";
+import { useForm } from "@inertiajs/react";
+import StoredFileForm from "./StoredFileForm";
+import { fileUploader } from "@/routes";
 
 interface NewFileModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
 }
 
-export default function NewFileModal({ isOpen, onOpenChange }: NewFileModalProps) {
+export default function NewFileModal({
+  isOpen,
+  onOpenChange,
+}: NewFileModalProps) {
   const { data, setData, post, processing, errors, reset } = useForm({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
   });
 
   const close = () => {

@@ -1,6 +1,5 @@
 import { AlertDialog, Button } from "@heroui/react";
 
-
 type DeleteInfo = {
   onOpenChange: (isOpen: boolean) => void;
   confirm: string;

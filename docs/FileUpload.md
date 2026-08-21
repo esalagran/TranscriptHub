@@ -251,37 +251,37 @@ The result shall contain only files that satisfy all three conditions.
 
 The system shall support the following file formats:
 
-| Category | Format         | Extension | MIME Type |
-|----------|----------------|-----------|-----------|
-| Text     | Plain text     | `.txt`    | `text/plain` |
-| Text     | Markdown       | `.md`     | `text/markdown` |
-| Text     | CSV            | `.csv`    | `text/csv` |
-| Text     | JSON           | `.json`   | `application/json` |
-| Text     | PDF            | `.pdf`    | `application/pdf` |
+| Category | Format         | Extension | MIME Type                                                                 |
+| -------- | -------------- | --------- | ------------------------------------------------------------------------- |
+| Text     | Plain text     | `.txt`    | `text/plain`                                                              |
+| Text     | Markdown       | `.md`     | `text/markdown`                                                           |
+| Text     | CSV            | `.csv`    | `text/csv`                                                                |
+| Text     | JSON           | `.json`   | `application/json`                                                        |
+| Text     | PDF            | `.pdf`    | `application/pdf`                                                         |
 | Text     | Microsoft Word | `.docx`   | `application/vnd.openxmlformats-officedocument.wordprocessingml.document` |
-| Audio    | MPEG Audio     | `.mp3`    | `audio/mpeg` |
-| Audio    | WAV            | `.wav`    | `audio/wav` |
-| Audio    | MPEG-4 Audio   | `.m4a`    | `audio/mp4` |
-| Audio    | FLAC           | `.flac`   | `audio/flac` |
-| Audio    | Ogg Audio      | `.ogg`    | `audio/ogg` |
-| Audio    | AAC            | `.aac`    | `audio/aac` |
+| Audio    | MPEG Audio     | `.mp3`    | `audio/mpeg`                                                              |
+| Audio    | WAV            | `.wav`    | `audio/wav`                                                               |
+| Audio    | MPEG-4 Audio   | `.m4a`    | `audio/mp4`                                                               |
+| Audio    | FLAC           | `.flac`   | `audio/flac`                                                              |
+| Audio    | Ogg Audio      | `.ogg`    | `audio/ogg`                                                               |
+| Audio    | AAC            | `.aac`    | `audio/aac`                                                               |
 
 Files whose format is not listed in this table shall be rejected.
 
 ## File State Transitions
 
-| Current State | Event | Next State |
-|---------------|-------|------------|
-| UPLOADING | Upload completes | PROCESSING |
-| UPLOADING | User cancels upload | DELETED |
-| UPLOADING | Upload remains inactive for more than 24 hours | DELETED |
-| PROCESSING | All validation and processing succeeds | AVAILABLE |
-| PROCESSING | Malware detected | QUARANTINED |
-| PROCESSING | Processing fails after retry limit | FAILED |
-| AVAILABLE | User archives file | ARCHIVED |
-| FAILED | User archives file | ARCHIVED |
-| QUARANTINED | User archives file | ARCHIVED |
-| ARCHIVED | User permanently deletes file | DELETED |
+| Current State | Event                                          | Next State  |
+| ------------- | ---------------------------------------------- | ----------- |
+| UPLOADING     | Upload completes                               | PROCESSING  |
+| UPLOADING     | User cancels upload                            | DELETED     |
+| UPLOADING     | Upload remains inactive for more than 24 hours | DELETED     |
+| PROCESSING    | All validation and processing succeeds         | AVAILABLE   |
+| PROCESSING    | Malware detected                               | QUARANTINED |
+| PROCESSING    | Processing fails after retry limit             | FAILED      |
+| AVAILABLE     | User archives file                             | ARCHIVED    |
+| FAILED        | User archives file                             | ARCHIVED    |
+| QUARANTINED   | User archives file                             | ARCHIVED    |
+| ARCHIVED      | User permanently deletes file                  | DELETED     |
 
 A file shall not transition to AVAILABLE until all required validation, malware scanning, duplicate detection, and processing have completed successfully.
 
@@ -296,24 +296,29 @@ A file shall not transition to AVAILABLE until all required validation, malware 
 5. The system shall provide upload progress updates to the client at least every 2 seconds while an upload is active.
 
 ### Reliability
+
 6. Interrupted uploads shall be resumable without requiring successfully transferred data to be uploaded again.
 7. The system shall not expose partially uploaded or incompletely processed files as AVAILABLE.
 8. Transient failures during file processing or malware scanning shall be retried according to the configured retry policy.
 9. A failure during upload, processing, or scanning shall not result in a file being incorrectly marked as AVAILABLE.
 
 ### Data Integrity
+
 10. The content hash stored for a file shall correspond to the actual contents of the stored file.
 11. The system shall verify that an uploaded file is complete and uncorrupted before making it AVAILABLE.
 12. File metadata and its corresponding physical file shall remain consistent.
 
 ### Availability
+
 13. The file upload and file management functionality shall maintain at least 99.9% monthly availability.
 
 ### Scalability
+
 14. The system shall support at least 10 concurrent uploads of files up to 3 GiB without exceeding the defined performance requirements.
 15. The system shall support at least 10,000 files per user without exceeding the defined file-list and filtering performance requirements.
 
 ### Security
+
 16. All file transfers shall be encrypted in transit using TLS.
 17. Stored files shall be encrypted at rest using the organization's approved encryption mechanism.
 18. Authorization shall be enforced for every operation involving a file, including listing, viewing, downloading, previewing, modifying, archiving, and deleting.
@@ -322,6 +327,7 @@ A file shall not transition to AVAILABLE until all required validation, malware 
 21. The system shall validate file content independently of the filename extension.
 
 ### Storage and Resource Management
+
 22. The system shall protect AVAILABLE files against loss caused by an individual storage-component failure.
 23. Temporary data created during upload, processing, and malware scanning shall be automatically cleaned up when it is no longer required.
 24. Cancelled, failed, and stale uploads shall not retain temporary storage indefinitely.
@@ -329,6 +335,7 @@ A file shall not transition to AVAILABLE until all required validation, malware 
 26. Permanently deleted files shall no longer be accessible through the application or its supported APIs.
 
 ### Observability
+
 27. The system shall record sufficient information to trace the lifecycle of each file from upload through processing, availability, archiving, and deletion.
 28. The system shall expose metrics for:
     - Upload duration
@@ -340,6 +347,7 @@ A file shall not transition to AVAILABLE until all required validation, malware 
 29. The system shall log failures occurring during upload, processing, malware scanning, and storage operations without logging file contents.
 
 ### Recovery
+
 30. The system shall have a Recovery Point Objective (RPO) of 1 hour.
 31. The system shall have a Recovery Time Objective (RTO) of 4 hours.
 32. Following a system failure, files and metadata successfully stored before the recovery point shall be recoverable within the defined RPO and RTO.

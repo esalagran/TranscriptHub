@@ -1,13 +1,13 @@
 export type Flash = {
-  notice?: string
-  alert?: string
-}
+  notice?: string;
+  alert?: string;
+};
 
 export type User = {
-  email_address: string
-}
+  email_address: string;
+};
 
 export type SharedProps = {
-  flash: Flash
-  user?: User
-}
+  flash: Flash;
+  user?: User;
+};
