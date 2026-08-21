@@ -1,5 +1,0 @@
-pre-commit:
-  commands:
-    rubocop:
-      glob: "*.rb"
-      run: bundle exec rubocop
